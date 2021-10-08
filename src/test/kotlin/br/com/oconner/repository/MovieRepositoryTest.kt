@@ -1,6 +1,7 @@
 package br.com.oconner.repository
 
 import br.com.oconner.domain.Movie
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -11,11 +12,16 @@ import java.time.LocalDate
 @DataMongoTest
 class MovieRepositoryTest(@Autowired val movieRepository: MovieRepository) {
 
+    @AfterEach
+    internal fun tearDown() {
+        movieRepository.deleteAll()
+    }
+
     @Test
     fun `should create movie`() {
         val movie = Movie(
-                name="The Fast and the Furious",
-                description="",
+                name = "The Fast and the Furious",
+                description = "",
                 releaseDate = LocalDate.of(2001, 6, 22),
                 rating = 5,
                 imdbRating = "",

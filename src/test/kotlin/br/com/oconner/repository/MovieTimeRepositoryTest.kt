@@ -3,6 +3,7 @@ package br.com.oconner.repository
 import br.com.oconner.domain.Auditorium
 import br.com.oconner.domain.MovieTime
 import br.com.oconner.domain.Showtime
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -15,6 +16,11 @@ import java.time.DayOfWeek
 
 @DataMongoTest
 class MovieTimeRepositoryTest(@Autowired val movieTimeRepository: MovieTimeRepository) {
+
+    @AfterEach
+    internal fun tearDown() {
+        movieTimeRepository.deleteAll()
+    }
 
     @Test
     fun `should create movie time`() {
