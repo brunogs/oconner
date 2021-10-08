@@ -29,13 +29,14 @@ class ReviewController(private val reviewService: ReviewService) {
     }
 
     @GetMapping("/{movieId}/reviews")
-    fun getReviews(@PathVariable movieId: String) : ResponseEntity<Any> {
-        val reviews = reviewService.getReviewByMovieId(movieId)
-        return when {
-            reviews.isNotEmpty() -> ok(reviews)
-            else -> noContent().build()
+    fun getReviews(@PathVariable movieId: String) =
+         reviewService.getReviewByMovieId(movieId).let {
+            when {
+                it.isNotEmpty() -> ok(it)
+                else -> noContent().build()
+            }
         }
-    }
+
 
     @GetMapping("/{movieId}/rating")
     fun getRating(@PathVariable movieId: String) =
