@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/movies")
@@ -24,7 +25,7 @@ class ReviewController(private val reviewService: ReviewService) {
 
     @ResponseStatus(ACCEPTED)
     @PostMapping("/{movieId}/reviews")
-    fun createReview(@PathVariable movieId: String, @Validated @RequestBody review: Review) {
+    fun createReview(@PathVariable movieId: String, @Valid @RequestBody review: Review) {
         reviewService.create(review)
     }
 

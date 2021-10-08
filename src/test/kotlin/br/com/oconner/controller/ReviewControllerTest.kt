@@ -1,10 +1,13 @@
 package br.com.oconner.controller
 
+import br.com.oconner.domain.Customer
 import br.com.oconner.fixture.Reviews
 import br.com.oconner.repository.ReviewRepository
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -29,9 +32,34 @@ class ReviewControllerTest(
         reviewRepository.deleteAll()
     }
 
+    @ParameterizedTest
+    @ValueSource(ints = [0, -3, 12])
+    fun `should validate rating field`(invalidRating: Int) {
+        val invalidReview = Reviews.createReview(rating = invalidRating)
+
+        mvc.perform(post("/movies/123/reviews")
+            .contentType(APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(invalidReview))
+        ).andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `should validate author name`() {
+        val invalidReview = Reviews.createReview(
+                rating = 3,
+                customerName = ""
+        )
+
+        mvc.perform(
+                post("/movies/${invalidReview.movieId}/reviews")
+                    .contentType(APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(invalidReview))
+        ).andExpect(status().isBadRequest)
+    }
+
     @Test
     fun `should create review`() {
-        val simpleReview = Reviews.createReview()
+        val simpleReview = Reviews.createReview(rating = 4)
 
         mvc.perform(
             post("/movies/${simpleReview.movieId}/reviews")
