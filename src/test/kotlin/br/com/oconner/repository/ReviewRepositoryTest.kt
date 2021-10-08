@@ -6,6 +6,8 @@ import org.apache.commons.lang3.RandomStringUtils
 import org.apache.commons.lang3.RandomStringUtils.randomAlphabetic
 import org.apache.commons.lang3.RandomUtils
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -40,6 +42,22 @@ class ReviewRepositoryTest(@Autowired val reviewRepository: ReviewRepository) {
         assertThrows<DuplicateKeyException> {
             reviewRepository.save(reviewTwo)
         }
+    }
+
+    @Test
+    fun `should retrieve average rating`() {
+        val movieId = "123"
+        val reviewOne = createReview(rating = 2, movieId = movieId)
+        val reviewTwo = createReview(rating = 5, movieId = movieId)
+        val reviewThree = createReview(rating = 1, movieId = movieId)
+        val reviewFour = createReview(rating = 3, movieId = movieId)
+
+        listOf(reviewOne, reviewTwo, reviewThree, reviewFour).forEach(reviewRepository::save)
+
+        val aggregatedRating = reviewRepository.findAggregatedRating(movieId).get()
+
+        assertEquals(2, aggregatedRating.ratingAverage)
+        assertEquals(4, aggregatedRating.totalReviews)
     }
 
     private fun createReview(

@@ -2,6 +2,7 @@ package br.com.oconner.domain
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.index.CompoundIndex
+import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.core.mapping.Field
 import org.springframework.data.mongodb.core.mapping.FieldType
@@ -13,6 +14,7 @@ data class Review(
     val id: String? = null,
     val rating: Int,
     val author: Customer,
+    @Indexed
     @Field(targetType = FieldType.STRING)
     val movieId: String
 )
