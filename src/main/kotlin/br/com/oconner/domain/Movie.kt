@@ -11,7 +11,6 @@ data class Movie (
     val name: String,
     val description: String,
     val releaseDate: LocalDate,
-    val rating: AggregatedRating,
     val imdbRating: String,
     val runtime: String
 )
