@@ -1,12 +1,7 @@
 package br.com.oconner.repository
 
-import br.com.oconner.domain.Customer
-import br.com.oconner.domain.Review
-import org.apache.commons.lang3.RandomStringUtils
-import org.apache.commons.lang3.RandomStringUtils.randomAlphabetic
-import org.apache.commons.lang3.RandomUtils
+import br.com.oconner.fixture.Reviews
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
@@ -25,7 +20,7 @@ class ReviewRepositoryTest(@Autowired val reviewRepository: ReviewRepository) {
 
     @Test
     fun `should create review`() {
-        val review = createReview()
+        val review = Reviews.createReview()
 
         val result = reviewRepository.save(review)
 
@@ -35,8 +30,8 @@ class ReviewRepositoryTest(@Autowired val reviewRepository: ReviewRepository) {
 
     @Test
     fun `should not allow duplicated review`() {
-        val reviewOne = createReview(customerName = "User Test", movieId = "123")
-        val reviewTwo = createReview(customerName = "User Test", movieId = "123")
+        val reviewOne = Reviews.createReview(customerName = "User Test", movieId = "123")
+        val reviewTwo = Reviews.createReview(customerName = "User Test", movieId = "123")
 
         reviewRepository.save(reviewOne)
         assertThrows<DuplicateKeyException> {
@@ -47,10 +42,10 @@ class ReviewRepositoryTest(@Autowired val reviewRepository: ReviewRepository) {
     @Test
     fun `should retrieve average rating`() {
         val movieId = "123"
-        val reviewOne = createReview(rating = 2, movieId = movieId)
-        val reviewTwo = createReview(rating = 5, movieId = movieId)
-        val reviewThree = createReview(rating = 1, movieId = movieId)
-        val reviewFour = createReview(rating = 3, movieId = movieId)
+        val reviewOne = Reviews.createReview(rating = 2, movieId = movieId)
+        val reviewTwo = Reviews.createReview(rating = 5, movieId = movieId)
+        val reviewThree = Reviews.createReview(rating = 1, movieId = movieId)
+        val reviewFour = Reviews.createReview(rating = 3, movieId = movieId)
 
         listOf(reviewOne, reviewTwo, reviewThree, reviewFour).forEach(reviewRepository::save)
 
@@ -58,17 +53,6 @@ class ReviewRepositoryTest(@Autowired val reviewRepository: ReviewRepository) {
 
         assertEquals(2, aggregatedRating.ratingAverage)
         assertEquals(4, aggregatedRating.totalReviews)
-    }
-
-    private fun createReview(
-            customerName: String = randomAlphabetic(5),
-            rating: Int = RandomUtils.nextInt(),
-            movieId: String = randomAlphabetic(5)) : Review {
-        return Review(
-                rating = rating,
-                author = Customer(name = customerName),
-                movieId = movieId
-        )
     }
 
 }
