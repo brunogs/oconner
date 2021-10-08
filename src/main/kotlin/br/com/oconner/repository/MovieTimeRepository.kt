@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface MovieTimeRepository : MongoRepository<MovieTime, String> {
+
+    fun findAllByMovieId(movieId: String): List<MovieTime>
+
 }

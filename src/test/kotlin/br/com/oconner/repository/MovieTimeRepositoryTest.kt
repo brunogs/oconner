@@ -26,15 +26,11 @@ class MovieTimeRepositoryTest(@Autowired val movieTimeRepository: MovieTimeRepos
     fun `should create movie time`() {
         val movieTime = MovieTime(
             movieId = "123",
-            times = setOf(
-                Showtime(
-                    dayOfWeek = DayOfWeek.MONDAY,
-                    hour = 15,
-                    minute = 30,
-                    auditorium = Auditorium("Auditorium 1"),
-                    price = BigDecimal("15.00")
-                )
-            )
+            dayOfWeek = DayOfWeek.MONDAY,
+            hour = 15,
+            minute = 30,
+            auditorium = Auditorium("Auditorium 1"),
+            price = BigDecimal("15.00")
         )
 
         val result = movieTimeRepository.save(movieTime)
@@ -47,27 +43,19 @@ class MovieTimeRepositoryTest(@Autowired val movieTimeRepository: MovieTimeRepos
     fun `should not allow two movie time for same movie`() {
         val movieTime = MovieTime(
                 movieId = "123",
-                times = setOf(
-                    Showtime(
-                        dayOfWeek = DayOfWeek.MONDAY,
-                        hour = 15,
-                        minute = 30,
-                        auditorium = Auditorium("Auditorium 1"),
-                        price = BigDecimal("15.00")
-                    )
-                )
+                dayOfWeek = DayOfWeek.MONDAY,
+                hour = 15,
+                minute = 30,
+                auditorium = Auditorium("Auditorium 1"),
+                price = BigDecimal("15.00")
         )
         val movieTimeTwo = MovieTime(
                 movieId = "123",
-                times = setOf(
-                    Showtime(
-                        dayOfWeek = DayOfWeek.TUESDAY,
-                        hour = 15,
-                        minute = 30,
-                        auditorium = Auditorium("Auditorium 1"),
-                        price = BigDecimal("15.00")
-                    )
-                )
+                dayOfWeek = DayOfWeek.MONDAY,
+                hour = 15,
+                minute = 30,
+                auditorium = Auditorium("Auditorium 1"),
+                price = BigDecimal("15.00")
         )
 
         movieTimeRepository.save(movieTime)

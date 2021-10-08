@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class ReviewService(
-        private val reviewRepository: ReviewRepository
-    ) {
+    private val reviewRepository: ReviewRepository
+) {
 
     private val logger = KotlinLogging.logger {}
 
