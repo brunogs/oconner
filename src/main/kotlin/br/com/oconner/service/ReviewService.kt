@@ -17,4 +17,10 @@ class ReviewService(
         reviewRepository.save(review)
     }
 
+    fun getReviewByMovieId(movieId: String) =
+        reviewRepository.findAllByMovieId(movieId)
+
+    fun getRatingByMovieId(movieId: String) =
+        reviewRepository.findAggregatedRating(movieId)
+
 }

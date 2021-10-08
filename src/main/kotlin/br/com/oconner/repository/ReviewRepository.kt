@@ -8,6 +8,9 @@ import java.util.*
 
 @Repository
 interface ReviewRepository : MongoRepository<Review, String>, ReviewCustomRepository {
+
+    fun findAllByMovieId(movieId: String): List<Review>
+
 }
 
 interface ReviewCustomRepository {
