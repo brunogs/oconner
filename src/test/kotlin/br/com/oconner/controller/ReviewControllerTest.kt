@@ -1,13 +1,11 @@
 package br.com.oconner.controller
 
-import br.com.oconner.domain.Customer
 import br.com.oconner.fixture.Reviews
 import br.com.oconner.repository.ReviewRepository
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc

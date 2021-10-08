@@ -4,11 +4,8 @@ import br.com.oconner.fixture.MovieTimes
 import br.com.oconner.repository.MovieTimeRepository
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -18,6 +15,7 @@ import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
@@ -43,6 +41,24 @@ class MovieTimeControllerTest(
                 .contentType(APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(simpleMovieTime))
         ).andExpect(status().isAccepted)
+    }
+
+    @Test
+    fun `should update a movie time`() {
+        val simpleMovieTime = MovieTimes.createMovieTime()
+
+        mvc.perform(
+            post("/movies/${simpleMovieTime.movieId}/times")
+                .contentType(APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(simpleMovieTime))
+        ).andExpect(status().isAccepted)
+
+        val updatedMovieTime =  simpleMovieTime.copy(hour = 20)
+        mvc.perform(
+            put("/movies/${simpleMovieTime.movieId}/times")
+                .contentType(APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(updatedMovieTime))
+        ).andExpect(status().isOk)
     }
 
     @ParameterizedTest
@@ -73,7 +89,7 @@ class MovieTimeControllerTest(
     fun `should retrieve movie time`() {
         val movieId = "123"
         repeat(10) {
-            movieTimeRepository.save(MovieTimes.createMovieTime(movieId = movieId, hour = it + 1))
+            movieTimeRepository.save(MovieTimes.createMovieTime(movieId = movieId, hour = it))
         }
 
         mvc.perform(get("/movies/${movieId}/times"))
