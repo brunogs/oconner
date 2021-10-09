@@ -24,4 +24,17 @@ class MovieRepositoryTest(@Autowired val movieRepository: MovieRepository) {
         assertNotNull(result)
         assertNotNull(result.id)
     }
+
+    @Test
+    fun `should retrieve summary movies`() {
+        val movie = Movies.validMovie
+
+        movieRepository.save(movie)
+
+        val summary = movieRepository.findAllSummary()
+
+        assertNotNull(summary)
+        assertNotNull(summary.first().title)
+        assertNotNull(summary.first().imdbId)
+    }
 }

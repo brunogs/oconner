@@ -6,8 +6,8 @@ import java.time.LocalDate
 object Movies {
 
     val validMovie = Movie(
-        name = "The Fast and the Furious",
-        description = "",
+        title = "The Fast and the Furious",
+        imdbId = "1234",
         releaseDate = LocalDate.of(2001, 6, 22),
         imdbRating = "",
         runtime = "106 min"

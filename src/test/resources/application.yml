@@ -2,3 +2,34 @@ spring:
   data:
     mongodb:
       auto-index-creation: true
+  jackson:
+    default-property-inclusion: non_null
+custom:
+  omdb:
+    url: http://localhost:9090
+  seed:
+    movieCatalog:
+      -
+        title: "The Fast and the Furious"
+        imdbId: tt0232500
+      -
+        title: "2 Fast 2 Furious"
+        imdbId: tt0322259
+      -
+        title: "The Fast and the Furious: Tokyo Drift"
+        imdbId: tt0463985
+      -
+        title: "Fast & Furious"
+        imdbId: tt1013752
+      -
+        title: "Fast Five"
+        imdbId: tt1596343
+      -
+        title: "Fast & Furious 6"
+        imdbId: tt1905041
+      -
+        title: "Furious 7"
+        imdbId: tt2820852
+      -
+        title: "The Fate of the Furious"
+        imdbId: tt4630562
