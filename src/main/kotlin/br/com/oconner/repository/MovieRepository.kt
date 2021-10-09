@@ -14,6 +14,4 @@ interface MovieRepository : MongoRepository<Movie, String> {
 
     fun findByImdbId(imdbId: String): Optional<Movie>
 
-    fun findByIdAndDetailsIsTrue(imdbId: String): Optional<Movie>
-
 }
