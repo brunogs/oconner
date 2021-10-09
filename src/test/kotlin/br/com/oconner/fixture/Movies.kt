@@ -8,7 +8,7 @@ object Movies {
     val validMovie = Movie(
         title = "The Fast and the Furious",
         imdbId = "1234",
-        releaseDate = LocalDate.of(2001, 6, 22),
+        releaseDate = "2001 Jun",
         imdbRating = "",
         runtime = "106 min"
     )
