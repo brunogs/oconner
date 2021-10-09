@@ -19,15 +19,15 @@ And it uses the main following technologies:
 
 ## Technical Considerations
 
-Two important decisions here were the language and the database. And I choose to use kotlin because I believe It is a better JVM language nowadays.
-With Kotlin is very easy to make an immutable code and is enjoyable to work with its collections.
+Two important decisions here were the language and the database. I choose to use kotlin because I believe It is the best JVM language nowadays.
+Kotlin is very easy to make an immutable code and is enjoyable to work with its collections.
 
-The database I choose to use is MongoDB because is flexible and powerful, and I think it supports well this use case.
+The database I choose to use is MongoDB because it is flexible and powerful, and I think it supports well this use case.
 
 ## Setup
 
-To build and run this project is required to have installed **Java** and **Docker**.
-I strongly recommend install Java using sdkman https://sdkman.io/, using this command:
+To build and run this project it is required to install **Java** and **Docker**.
+I strongly recommend installing Java using sdkman https://sdkman.io/, using the following command:
 ```sh
 sdk install java 17-open
 ```
@@ -47,7 +47,7 @@ Steps of the script:
 - Starts image of mongodb
 - Starts image of `oconner-api`
 
-If needed to see logs you can use this command `docker-compose logs api-oconner`
+If you need to see the logs you can use this command `docker-compose logs api-oconner`
 
 ## How it works
 
