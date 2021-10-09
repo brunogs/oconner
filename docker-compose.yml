@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  api-oconner:
+    image: oconner:latest
+    container_name: api-oconner
+    ports:
+      - "8080:8080"
+    depends_on:
+      - "mongodb"
+    environment:
+      MONGODB_HOST: mongodb-local
+  mongodb:
+    container_name: mongodb-local
+    image: mongo:4.0.10
+    ports:
+      - 27017:27017

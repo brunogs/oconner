@@ -2,6 +2,7 @@ spring:
   data:
     mongodb:
       auto-index-creation: true
+      host: ${MONGODB_HOST:localhost}
   jackson:
     default-property-inclusion: non_null
 custom:
