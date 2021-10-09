@@ -34,7 +34,7 @@ class MovieServiceTest(
 
         val movieId = "123"
 
-        every { movieRepository.findByImdbIdAndDetailsIsTrue(movieId) } returns Optional.empty()
+        every { movieRepository.findByIdAndDetailsIsTrue(movieId) } returns Optional.empty()
         every { omdbRepository.getMovieById(movieId) } returns ExternalMovie(title = "", imdbId = "")
         every { movieRepository.save(any()) } returns Movies.validMovie
 
@@ -42,7 +42,7 @@ class MovieServiceTest(
 
         service.getMovieById(movieId)
 
-        verify(exactly = 1) { movieRepository.findByImdbIdAndDetailsIsTrue(movieId) }
+        verify(exactly = 1) { movieRepository.findByIdAndDetailsIsTrue(movieId) }
         verify(exactly = 1) { omdbRepository.getMovieById(movieId) }
         verify(exactly = 1) { movieRepository.save(any()) }
     }

@@ -8,7 +8,8 @@ services:
     depends_on:
       - "mongodb"
     environment:
-      MONGODB_HOST: mongodb-local
+      - API_KEY
+      - MONGODB_HOST=mongodb-local
   mongodb:
     container_name: mongodb-local
     image: mongo:4.0.10

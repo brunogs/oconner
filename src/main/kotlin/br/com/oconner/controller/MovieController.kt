@@ -18,7 +18,7 @@ class MovieController(
     @GetMapping
     fun getMovies() = movieService.getMovies()
 
-    @GetMapping("/{id}")
+    @GetMapping("/{movieId}")
     fun getMovieById(@PathVariable movieId: String) =
         movieService.getMovieById(movieId).orElseThrow {
             ResponseStatusException(NOT_FOUND)
