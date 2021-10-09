@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
 
 import br.com.oconner.extension.orElseNoContent
+import io.swagger.annotations.Api
+import org.springframework.http.MediaType
 
 @RestController
 @RequestMapping("/movies")
+@Api(value = "Movies", produces = MediaType.APPLICATION_JSON_VALUE, tags = ["movies-endpoints"], description = "O'Conner API")
 class MovieTimeController(
     private val movieTimeService: MovieTimeService
 ) {
@@ -27,9 +30,10 @@ class MovieTimeController(
         movieTimeService.create(movieTime)
     }
 
-    @PutMapping("/{movieId}/times")
-    fun putMovieTime(@PathVariable movieId: String, @Valid @RequestBody movieTime: MovieTime) {
-        movieTimeService.create(movieTime)
+    @PutMapping("/{movieId}/times/{movieTimeId}")
+    fun putMovieTime(@PathVariable movieId: String, @PathVariable movieTimeId: String,
+                     @Valid @RequestBody movieTime: MovieTime) {
+        movieTimeService.update(movieTime.copy(id = movieTimeId))
     }
 
     @GetMapping("/{movieId}/times")

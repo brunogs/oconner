@@ -15,9 +15,13 @@ import org.springframework.web.server.ResponseStatusException
 import javax.validation.Valid
 
 import br.com.oconner.extension.orElseNoContent
+import io.swagger.annotations.Api
+import org.springframework.http.MediaType
+import org.springframework.web.bind.annotation.DeleteMapping
 
 @RestController
 @RequestMapping("/movies")
+@Api(value = "Movies", produces = MediaType.APPLICATION_JSON_VALUE, tags = ["movies-endpoints"], description = "O'Conner API")
 class ReviewController(private val reviewService: ReviewService) {
 
     @ResponseStatus(ACCEPTED)
@@ -30,6 +34,10 @@ class ReviewController(private val reviewService: ReviewService) {
     fun getReviews(@PathVariable movieId: String) =
          reviewService.getReviewByMovieId(movieId).orElseNoContent()
 
+    @DeleteMapping("/{movieId}/reviews/{reviewId}")
+    fun deleteReview(@PathVariable movieId: String, @PathVariable reviewId: String) {
+        reviewService.deleteById(reviewId)
+    }
 
     @GetMapping("/{movieId}/rating")
     fun getRating(@PathVariable movieId: String) =
