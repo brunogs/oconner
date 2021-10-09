@@ -16,6 +16,11 @@ class MovieTimeService(
         movieTimeRepository.save(movieTime)
     }
 
+    fun update(movieTime: MovieTime) {
+        logger.info { "updating movieTime=$movieTime" }
+        movieTimeRepository.save(movieTime)
+    }
+
     fun getMovieTimesByMovieId(movieId: String) =
         movieTimeRepository.findAllByMovieId(movieId)
 }

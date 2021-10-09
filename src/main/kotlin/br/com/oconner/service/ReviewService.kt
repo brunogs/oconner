@@ -23,4 +23,9 @@ class ReviewService(
     fun getRatingByMovieId(movieId: String) =
         reviewRepository.findAggregatedRating(movieId)
 
+    fun deleteById(reviewId: String) {
+        logger.info { "deleting review id=$reviewId" }
+        reviewRepository.deleteById(reviewId)
+    }
+
 }
