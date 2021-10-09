@@ -53,9 +53,11 @@ class MovieTimeControllerTest(
                 .content(objectMapper.writeValueAsString(simpleMovieTime))
         ).andExpect(status().isAccepted)
 
-        val updatedMovieTime =  simpleMovieTime.copy(hour = 20)
+        val createdMovieTime = movieTimeRepository.findAll().first()
+        val updatedMovieTime =  createdMovieTime.copy(hour = 20)
+
         mvc.perform(
-            put("/movies/${simpleMovieTime.movieId}/times")
+            put("/movies/${simpleMovieTime.movieId}/times/${updatedMovieTime.id}")
                 .contentType(APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(updatedMovieTime))
         ).andExpect(status().isOk)

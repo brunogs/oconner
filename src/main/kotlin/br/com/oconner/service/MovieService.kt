@@ -35,15 +35,21 @@ class MovieService(
         }
     }
 
-    fun getMovies() =
-        movieRepository.findAllSummary()
+    fun getMovies(): List<Movie> {
+        logger.info { "getting all movies" }
+        return movieRepository.findAllSummary()
+    }
 
-    fun getMovieById(movieId: String) =
-        movieRepository.findById(movieId)
-            .filter { !it.details }
+    fun getMovieById(movieId: String): Optional<Movie> {
+        logger.info { "getting movie by id=$movieId" }
+        return movieRepository.findById(movieId)
             .flatMap {
-                fetchExternal(it)
+                when {
+                    it.details -> Optional.of(it)
+                    else -> fetchExternal(it)
+                }
             }
+    }
 
     private fun fetchExternal(movie: Movie) = try {
         val externalMovie = omdbRepository.getMovieById(movie.imdbId)
