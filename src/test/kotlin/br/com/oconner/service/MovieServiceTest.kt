@@ -1,6 +1,7 @@
 package br.com.oconner.service
 
 import br.com.oconner.config.SeedConfig
+import br.com.oconner.domain.Movie
 import br.com.oconner.domain.omdb.ExternalMovie
 import br.com.oconner.fixture.Movies
 import br.com.oconner.repository.MovieRepository
@@ -33,17 +34,18 @@ class MovieServiceTest(
         val seedConfig: SeedConfig = mockk()
 
         val movieId = "123"
+        val imdbId = "321"
 
-        every { movieRepository.findByIdAndDetailsIsTrue(movieId) } returns Optional.empty()
-        every { omdbRepository.getMovieById(movieId) } returns ExternalMovie(title = "", imdbId = "")
+        every { movieRepository.findById(movieId) } returns Optional.of(Movie(title = "", imdbId = imdbId))
+        every { omdbRepository.getMovieById(imdbId) } returns ExternalMovie(title = "", imdbId = imdbId)
         every { movieRepository.save(any()) } returns Movies.validMovie
 
         val service = MovieService(movieRepository, omdbRepository, seedConfig)
 
         service.getMovieById(movieId)
 
-        verify(exactly = 1) { movieRepository.findByIdAndDetailsIsTrue(movieId) }
-        verify(exactly = 1) { omdbRepository.getMovieById(movieId) }
+        verify(exactly = 1) { movieRepository.findById(movieId) }
+        verify(exactly = 1) { omdbRepository.getMovieById(imdbId) }
         verify(exactly = 1) { movieRepository.save(any()) }
     }
 }
