@@ -66,6 +66,7 @@ With a movie id, you can do all the other operations.
   - Authorization - ROLES for admins and customers.
   - Another api only with this responsibility.
 - HATEOAS - I created and documented the endpoints thinking in their relationship, I think if I can provide hateoas references it will be helpful to clients consume this api.
+- Improve constraints validations.
 - CircuitBreaker - use resilience4j with webClient
 - Features: 
   - Create Movies
